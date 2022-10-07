@@ -6,23 +6,27 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>siri</title>
 	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="tailwind.config.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body class="w-full h-full bg-[#B1B2FF] flex justify-center items-center flex-col">
 
-	<textarea class="bg-[#EEF1FF] mb-4 rounded" id="text" cols="50" rows="10"></textarea>
-
-	<div class="flex justify-center w-full gap-x-7">
-		<button id="btnStartRecord">
-			<i class="text-5xl text-[#D2DAFF] fa-solid fa-microphone"></i>
-		</button>
-
-		<button id="btnStopRecord">
-			<i class="text-5xl text-[#D2DAFF] fa-solid fa-microphone-slash"></i>
-		</button>
+	<div class="flex justify-center flex-col">
+		<div class="flex justify-end w-full gap-x-7 mb-2">
+			<button id="btnStartRecord">
+				<i class="text-5xl text-[#D2DAFF] fa-solid fa-microphone"></i>
+			</button>
+	
+			<button id="btnStopRecord">
+				<i class="text-5xl text-[#D2DAFF] fa-solid fa-microphone-slash"></i>
+			</button>
+		</div>
+	
+		<textarea class="bg-[#EEF1FF] mb-4 rounded w-full max-w-screen-md max-h-56 text-calc-1 p-4" id="text" cols="50" rows="10"></textarea>
 	</div>
 
+	
 	<script src="script.js"></script>
 </body>
 
