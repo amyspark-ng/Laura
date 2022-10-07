@@ -10,7 +10,8 @@ recognition.interimResults = false;
 // what happens when it returns the things
 recognition.onresult = (event) => {
 	const results = event.results;
-	console.log(results)
+	const phrase = results[results.length - 1][0].transcript;
+	textarea.value = phrase
 }
 
 btnStartRecord.addEventListener('click', () => {
