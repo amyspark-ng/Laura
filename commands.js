@@ -1,4 +1,4 @@
-import { commands } from "./script.js"
+import { synth, utterThis } from "./script.js"
 
 export let commands = {
     "hola": function() {
