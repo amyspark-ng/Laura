@@ -27,7 +27,7 @@ recognition.onresult = (event) => {
 	}
 
 	else {
-		utterThis.text "Lo siento, no te entendi, puedes repetirlo?"
+		utterThis.text = "Lo siento, no te entendi, puedes repetirlo?"
 
 		synth.speak(utterThis)
 	}
