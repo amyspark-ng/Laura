@@ -22,14 +22,18 @@ recognition.onresult = (event) => {
 	const phrase = results[results.length - 1][0].transcript;
 	textarea.value = phrase
 
-	if (phrase in commands) {
-		commands[key]()
-	}
+	phrase = phrase.split()
 
-	else {
-		utterThis.text = "Lo siento, no te entendi, puedes repetirlo?"
-
-		synth.speak(utterThis)
+	// lajbel genius
+	for (k of phrase) {
+		if (commands[k]) {
+			commands[k]()
+		}
+	
+		else {
+			utterThis.text = "Lo siento, no conozco ese comando"
+			synth.speak(utterThis)			
+		}
 	}
 }
 
