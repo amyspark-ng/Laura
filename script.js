@@ -11,6 +11,8 @@ recognition.lang = 'es-ES';
 recognition.continuous = true;
 recognition.interimResults = false;
 
+console.log(recognition)
+
 export let synth = window.speechSynthesis;
 export let utterThis = new SpeechSynthesisUtterance();
 
@@ -20,7 +22,7 @@ synth.lang = 'es-ES';
 recognition.onresult = (event) => {
 	const results = event.results;
 	const phrase = results[results.length - 1][0].transcript;
-	textarea.value = phrase
+	textarea.value += phrase
 
 	phrase = phrase.split()
 
@@ -35,6 +37,14 @@ recognition.onresult = (event) => {
 			synth.speak(utterThis)			
 		}
 	}
+}
+
+recognition.onend = (event) => {
+	console.log("He dejado de escuchar")
+}
+
+recognition.onerror = (event) => {
+	console.log(event.error)
 }
 
 btnStartRecord.addEventListener('click', () => {
