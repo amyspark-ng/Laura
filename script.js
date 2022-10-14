@@ -1,9 +1,10 @@
-import { commands } from "./commands.js"
+import { commands, joking } from "./comms.js"
 
 // getting the dummy buttons
 const btnStartRecord = document.querySelector("#btnStartRecord")
 const btnStopRecord = document.querySelector("#btnStopRecord")
 const textarea = document.querySelector("#text")
+let badumtss = new Audio("badumtss.mp3")
 
 // setting stuff up
 export let recognition = new webkitSpeechRecognition();
@@ -15,9 +16,14 @@ export let synth = window.speechSynthesis;
 export let utterThis = new SpeechSynthesisUtterance();
 
 synth.lang = 'es-ES';
-// test("clima")
-// // commands["clima"]()
-console.log(commands)
+
+btnStartRecord.addEventListener('click', () => {
+	recognition.start()
+})
+
+btnStopRecord.addEventListener('click', () => {
+	recognition.abort()
+})
 
 // what happens when it returns the things
 recognition.onresult = (event) => {
@@ -29,15 +35,11 @@ recognition.onresult = (event) => {
 	phrase = phrase.toLowerCase().replace(deleteThese, '')
 	phrase = phrase.split(' ')
 
-	console.log(phrase)
-
-	let unknownCount = 1
+	let unknownCount = 0
 	for (let i = 0; i < phrase.length; i++) {
-		console.log(unknownCount)
 		recognition.abort()
 		
 		if (commands[phrase[i]]) {
-			console.log("YES THERE IS A COMMAND WITH THIS")
 			commands[phrase[i]]()
 			break
 		}
@@ -62,42 +64,9 @@ recognition.onerror = (event) => {
 	console.log(event.error)
 }
 
-btnStartRecord.addEventListener('click', () => {
-	recognition.start()
-})
-
-btnStopRecord.addEventListener('click', () => {
-	recognition.abort()
-})
-
-function test(phrase) {
-	textarea.value = phrase
-
-	const deleteThese = /[!"#$%&'()*+,-./:;<=>¿?@[\]^_`{|}~\u0300-\u036f]/g;
-	phrase = phrase.toLowerCase().replace(deleteThese, '')
-	phrase = phrase.split(' ')
-
-	console.log(phrase)
-
-	let unknownCount = 1
-	for (let i = 0; i < phrase.length; i++) {
-		console.log(unknownCount)
-		recognition.abort()
-		
-		if (commands[phrase[i]]) {
-			console.log("YES THERE IS A COMMAND WITH THIS")
-			commands[phrase[i]]()
-			break
-		}
-
-		else {
-			unknownCount++
-
-			if (unknownCount == phrase.length) {
-				utterThis.text = "Lo siento, no conozco ese comando"
-				synth.speak(utterThis)			
-				break
-			}
-		}
+utterThis.onend = (event) => {
+	if (joking) {
+		badumtss.play()
 	}
 }
+

@@ -1,13 +1,19 @@
 import { synth, utterThis, recognition } from "./script.js"
 
+export let joking = false
+
 export let commands = {
     "hola": function() {
+        joking = false
+
         utterThis.text = "Hola, en que puedo ayudarte?"
         synth.speak(utterThis) 
         recognition.abort()
-    },fjncgnfcgncfgcjmnjgddzgf
+    },
 
     "chiste": function() {
+        joking = true
+
         let jokes = [
             "Sabes como se dice Electricista en japones?. Yokito Fokito!",
             "Sabes que paso con el espantapajaros que hizo dieta?. Quedo mas flaco que una escopeta!",
@@ -46,14 +52,16 @@ export let commands = {
             "Que le dice un 2 a un 0?. Veinte conmigo guapeton",
         ]
 
-        SelectedJoke = jokes[Math.floor(Math.random()*jokes.length)];
+        let selectedJoke = jokes[Math.floor(Math.random()*jokes.length)];
 
         recognition.abort()
-        utterThis.text = SelectedJoke
+        utterThis.text = selectedJoke
         synth.speak(utterThis)
     },
     
     "clima": function() {
+        joking = false
+
         console.log("Hay buen clima") 
     },
 }
