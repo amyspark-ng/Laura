@@ -1,4 +1,4 @@
-import { commands, joking } from "./comms.js"
+import { commands, management } from "./comms.js"
 
 // getting the dummy buttons
 const btnStartRecord = document.querySelector("#btnStartRecord")
@@ -16,6 +16,8 @@ export let synth = window.speechSynthesis;
 export let utterThis = new SpeechSynthesisUtterance();
 
 synth.lang = 'es-ES';
+
+// test("amor")
 
 btnStartRecord.addEventListener('click', () => {
 	recognition.start()
@@ -48,6 +50,7 @@ recognition.onresult = (event) => {
 			unknownCount++
 
 			if (unknownCount == phrase.length) {
+		        management.joking = false
 				utterThis.text = "Lo siento, no conozco ese comando"
 				synth.speak(utterThis)			
 				break
@@ -65,8 +68,36 @@ recognition.onerror = (event) => {
 }
 
 utterThis.onend = (event) => {
-	if (joking) {
+	if (management.joking) {
 		badumtss.play()
 	}
 }
 
+function test(phrase) {
+	textarea.value = phrase
+
+	const deleteThese = /[!"#$%&'()*+,-./:;<=>¿?@[\]^_`{|}~\u0300-\u036f]/g;
+	phrase = phrase.toLowerCase().replace(deleteThese, '')
+	phrase = phrase.split(' ')
+
+	let unknownCount = 0
+	for (let i = 0; i < phrase.length; i++) {
+		recognition.abort()
+		
+		if (commands[phrase[i]]) {
+			commands[phrase[i]]()
+			break
+		}
+
+		else {
+			unknownCount++
+
+			if (unknownCount == phrase.length) {
+				joking = false
+				utterThis.text = "Lo siento, no conozco ese comando"
+				synth.speak(utterThis)			
+				break
+			}
+		}
+	}
+}

@@ -1,10 +1,12 @@
 import { synth, utterThis, recognition } from "./script.js"
 
-export let joking = false
+export let management = {
+    joking: false
+}
 
 export let commands = {
     "hola": function() {
-        joking = false
+        management.joking = false
 
         utterThis.text = "Hola, en que puedo ayudarte?"
         synth.speak(utterThis) 
@@ -12,7 +14,7 @@ export let commands = {
     },
 
     "chiste": function() {
-        joking = true
+        management.joking = true
 
         let jokes = [
             "Sabes como se dice Electricista en japones?. Yokito Fokito!",
@@ -59,8 +61,16 @@ export let commands = {
         synth.speak(utterThis)
     },
     
+    "amor": function() {
+        management.joking = true
+
+        utterThis.text = "No conozco el amor del todo, pero el amor es un sentimiento que hace a las personas sentirse en las nubes, lo unico que se es que para mi estar en la nube es completamente normal"
+        synth.speak(utterThis) 
+        recognition.abort()
+    },
+
     "clima": function() {
-        joking = false
+        management.joking = false
 
         console.log("Hay buen clima") 
     },
