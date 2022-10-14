@@ -1,64 +1,103 @@
-import { commands } from "./commands.js"
+import { commands } from "/commands.js"
 
-if ("webkitSpeechRecognition" in window) {
-	alert("should work why is it not")
-}
+// getting the dummy buttons
+const btnStartRecord = document.querySelector("#btnStartRecord")
+const btnStopRecord = document.querySelector("#btnStopRecord")
+const textarea = document.querySelector("#text")
 
+// setting stuff up
+export let recognition = new webkitSpeechRecognition();
+recognition.lang = 'es-ES';
+recognition.continuous = true;
+recognition.interimResults = false;
 
-	// getting the dummy buttons
-	const btnStartRecord = document.querySelector("#btnStartRecord")
-	const btnStopRecord = document.querySelector("#btnStopRecord")
-	const textarea = document.querySelector("#text")
+export let synth = window.speechSynthesis;
+export let utterThis = new SpeechSynthesisUtterance();
 
-	// setting stuff up
-	let recognition = new webkitSpeechRecognition();
-	recognition.lang = 'es-ES';
-	recognition.continuous = true;
-	recognition.interimResults = false;
+synth.lang = 'es-ES';
+// test("clima")
+// // commands["clima"]()
+console.log(commands)
 
-	console.log(recognition)
+// what happens when it returns the things
+recognition.onresult = (event) => {
+	let results = event.results;
+	let phrase = results[results.length - 1][0].transcript;
+	textarea.value = phrase
 
-	export let synth = window.speechSynthesis;
-	export let utterThis = new SpeechSynthesisUtterance();
+	const deleteThese = /[!"#$%&'()*+,-./:;<=>¿?@[\]^_`{|}~\u0300-\u036f]/g;
+	phrase = phrase.toLowerCase().replace(deleteThese, '')
+	phrase = phrase.split(' ')
 
-	synth.lang = 'es-ES';
+	console.log(phrase)
 
-	// what happens when it returns the things
-	recognition.onresult = (event) => {
-		console.log("FUCK YOU")
-		const results = event.results;
-		console.log(results)
-		const phrase = results[results.length - 1][0].transcript;
-		textarea.value += phrase
-
-		phrase = phrase.split()
-
-		// lajbel genius
-		for (k of phrase) {
-			if (commands[k]) {
-				commands[k]()
-			}
+	let unknownCount = 1
+	for (let i = 0; i < phrase.length; i++) {
+		console.log(unknownCount)
+		recognition.abort()
 		
-			else {
+		if (commands[phrase[i]]) {
+			console.log("YES THERE IS A COMMAND WITH THIS")
+			commands[phrase[i]]()
+			break
+		}
+
+		else {
+			unknownCount++
+
+			if (unknownCount == phrase.length) {
 				utterThis.text = "Lo siento, no conozco ese comando"
 				synth.speak(utterThis)			
+				break
 			}
 		}
 	}
+}
 
-	recognition.onend = (event) => {
-		console.log("He dejado de escuchar")
-	}
+recognition.onend = (event) => {
+	console.log("He dejado de escuchar")
+}
 
-	recognition.onerror = (event) => {
-		console.log(event.error)
-	}
+recognition.onerror = (event) => {
+	console.log(event.error)
+}
 
-	btnStartRecord.addEventListener('click', () => {
-		recognition.start()
-	})
+btnStartRecord.addEventListener('click', () => {
+	recognition.start()
+})
 
-	btnStopRecord.addEventListener('click', () => {
+btnStopRecord.addEventListener('click', () => {
+	recognition.abort()
+})
+
+function test(phrase) {
+	textarea.value = phrase
+
+	const deleteThese = /[!"#$%&'()*+,-./:;<=>¿?@[\]^_`{|}~\u0300-\u036f]/g;
+	phrase = phrase.toLowerCase().replace(deleteThese, '')
+	phrase = phrase.split(' ')
+
+	console.log(phrase)
+
+	let unknownCount = 1
+	for (let i = 0; i < phrase.length; i++) {
+		console.log(unknownCount)
 		recognition.abort()
-	})
+		
+		if (commands[phrase[i]]) {
+			console.log("YES THERE IS A COMMAND WITH THIS")
+			commands[phrase[i]]()
+			break
+		}
 
+		else {
+			unknownCount++
+
+			if (unknownCount == phrase.length) {
+				utterThis.text = "Lo siento, no conozco ese comando"
+				synth.speak(utterThis)			
+				break
+			}
+		}
+	}
+}
