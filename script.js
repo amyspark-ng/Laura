@@ -1,10 +1,10 @@
 import { commands } from "./commands.js"
 
-if (!("webkitSpeechRecognition" in window)) {
-	alert("DOESN'T WORK ON THIS BROWSER GET ANOTHER ONE")
-} 
+if ("webkitSpeechRecognition" in window) {
+	alert("should work why is it not")
+}
 
-else {
+
 	// getting the dummy buttons
 	const btnStartRecord = document.querySelector("#btnStartRecord")
 	const btnStopRecord = document.querySelector("#btnStopRecord")
@@ -61,4 +61,4 @@ else {
 	btnStopRecord.addEventListener('click', () => {
 		recognition.abort()
 	})
-}
+
