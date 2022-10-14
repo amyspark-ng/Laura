@@ -1,56 +1,64 @@
 import { commands } from "./commands.js"
 
-// getting the dummy buttons
-const btnStartRecord = document.querySelector("#btnStartRecord")
-const btnStopRecord = document.querySelector("#btnStopRecord")
-const textarea = document.querySelector("#text")
+if (!("webkitSpeechRecognition" in window)) {
+	alert("DOESN'T WORK ON THIS BROWSER GET ANOTHER ONE")
+} 
 
-// setting stuff up
-let recognition = new webkitSpeechRecognition();
-recognition.lang = 'es-ES';
-recognition.continuous = true;
-recognition.interimResults = false;
+else {
+	// getting the dummy buttons
+	const btnStartRecord = document.querySelector("#btnStartRecord")
+	const btnStopRecord = document.querySelector("#btnStopRecord")
+	const textarea = document.querySelector("#text")
 
-console.log(recognition)
+	// setting stuff up
+	let recognition = new webkitSpeechRecognition();
+	recognition.lang = 'es-ES';
+	recognition.continuous = true;
+	recognition.interimResults = false;
 
-export let synth = window.speechSynthesis;
-export let utterThis = new SpeechSynthesisUtterance();
+	console.log(recognition)
 
-synth.lang = 'es-ES';
+	export let synth = window.speechSynthesis;
+	export let utterThis = new SpeechSynthesisUtterance();
 
-// what happens when it returns the things
-recognition.onresult = (event) => {
-	const results = event.results;
-	const phrase = results[results.length - 1][0].transcript;
-	textarea.value += phrase
+	synth.lang = 'es-ES';
 
-	phrase = phrase.split()
+	// what happens when it returns the things
+	recognition.onresult = (event) => {
+		console.log("FUCK YOU")
+		const results = event.results;
+		console.log(results)
+		const phrase = results[results.length - 1][0].transcript;
+		textarea.value += phrase
 
-	// lajbel genius
-	for (k of phrase) {
-		if (commands[k]) {
-			commands[k]()
-		}
-	
-		else {
-			utterThis.text = "Lo siento, no conozco ese comando"
-			synth.speak(utterThis)			
+		phrase = phrase.split()
+
+		// lajbel genius
+		for (k of phrase) {
+			if (commands[k]) {
+				commands[k]()
+			}
+		
+			else {
+				utterThis.text = "Lo siento, no conozco ese comando"
+				synth.speak(utterThis)			
+			}
 		}
 	}
+
+	recognition.onend = (event) => {
+		console.log("He dejado de escuchar")
+	}
+
+	recognition.onerror = (event) => {
+		console.log(event.error)
+	}
+
+	btnStartRecord.addEventListener('click', () => {
+		recognition.start()
+	})
+
+	btnStopRecord.addEventListener('click', () => {
+		recognition.abort()
+	})
 }
-
-recognition.onend = (event) => {
-	console.log("He dejado de escuchar")
-}
-
-recognition.onerror = (event) => {
-	console.log(event.error)
-}
-
-btnStartRecord.addEventListener('click', () => {
-	recognition.start()
-})
-
-btnStopRecord.addEventListener('click', () => {
-	recognition.abort()
-})
