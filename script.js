@@ -1,4 +1,4 @@
-import { commands } from "/commands.js"
+import { commands } from "./commands.js"
 
 // getting the dummy buttons
 const btnStartRecord = document.querySelector("#btnStartRecord")
