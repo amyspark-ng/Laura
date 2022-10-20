@@ -52,6 +52,14 @@ export let commands = {
             "Que le dijo el 1 al 10?. Para ser como yo tienes que ser sin cero",
             "Llega un señor a una farmacia. Tienen pastillas para el cansancio?, Lo siento estan agotadas",
             "Que le dice un 2 a un 0?. Veinte conmigo guapeton",
+            "Como se llama el hermano enfermo de Hello Kitty?. Bron-quiti",
+            "Que hace un policia parado en una playa?. Esperando la ola criminal",
+            "Cual es el pez que da mas leche?. El pezon",
+            "Como se dice naufrago en chino?. Chinchu lancha",
+            "Si thor hubiese estudiado medicina seria, doc, thor",
+            "Porque windows tiene gripe?. Por abrir tantas ventanas",
+            "Porque messi no bautiza a su hijo?. Porque si no seria cristiano",
+            "Que hace una vaca con los ojos cerrados?. Leche concentrada",
         ]
 
         let selectedJoke = jokes[Math.floor(Math.random()*jokes.length)];
@@ -64,7 +72,7 @@ export let commands = {
     "amor": function() {
         management.joking = true
 
-        utterThis.text = "No conozco el amor del todo, pero el amor es un sentimiento que hace a las personas sentirse en las nubes, lo unico que se es que para mi estar en la nube es completamente normal"
+        utterThis.text = "No conozco el amor del todo, pero me han contado que el amor es un sentimiento que hace a las personas sentirse en las nubes, lo unico que se es que para mi estar en la nube es completamente normal"
         synth.speak(utterThis) 
         recognition.abort()
     },
