@@ -34,7 +34,7 @@ btnStopRecord.addEventListener('click', () => {
 recognition.onresult = (event) => {
 	let results = event.results;
 	ogPhrase = results[results.length - 1][0].transcript;
-	textarea.value = phrase
+	textarea.value = ogPhrase
 
 	const deleteThese = /[!"#$%&'()*+,-./:;<=>¿?@[\]^_`{|}~\u0300-\u036f]/g;
 	
