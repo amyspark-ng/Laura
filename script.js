@@ -6,6 +6,8 @@ const btnStopRecord = document.querySelector("#btnStopRecord")
 const textarea = document.querySelector("#text")
 let badumtss = new Audio("badumtss.mp3")
 
+let ogPhrase;
+
 // setting stuff up
 export let recognition = new webkitSpeechRecognition();
 recognition.lang = 'es-ES';
@@ -30,11 +32,12 @@ btnStopRecord.addEventListener('click', () => {
 // what happens when it returns the things
 recognition.onresult = (event) => {
 	let results = event.results;
-	let phrase = results[results.length - 1][0].transcript;
+	ogPhrase = results[results.length - 1][0].transcript;
 	textarea.value = phrase
 
 	const deleteThese = /[!"#$%&'()*+,-./:;<=>¿?@[\]^_`{|}~\u0300-\u036f]/g;
-	phrase = phrase.toLowerCase().replace(deleteThese, '')
+	
+	let phrase = ogPhrase.toLowerCase().replace(deleteThese, '')
 	phrase = phrase.split(' ')
 
 	let unknownCount = 0
