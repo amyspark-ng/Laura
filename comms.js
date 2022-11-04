@@ -70,9 +70,14 @@ export let commands = {
     },
     
     "amor": function() {
+        let answers = [
+            "No conozco el amor del todo, pero me han contado que el amor es un sentimiento que hace a las personas sentirse en las nubes, lo unico que se es que para mi estar en la nube es completamente normal",
+            "No lo se, mi programacion no permite entrar mentiras a mi sistema",
+        ]
+
         management.joking = true
 
-        utterThis.text = "No conozco el amor del todo, pero me han contado que el amor es un sentimiento que hace a las personas sentirse en las nubes, lo unico que se es que para mi estar en la nube es completamente normal"
+        utterThis.text = answers[Math.floor(Math.random()*answers.length)]
         synth.speak(utterThis) 
         recognition.abort()
     },
@@ -112,4 +117,32 @@ export let commands = {
         synth.speak(utterThis)
         recognition.abort()
     },
+    
+    "cancion": function() {
+  management.joking = false      
+
+    let answers = [
+           "Kevin Kaarl, Colapso",
+           "Martin Elias, Bendito corazon",
+           "Myke Towers, La curiosidad",
+            "Ñengo, muy feliz"
+        ]
+
+        utterThis.text = "Te recomiendo " + answers[Math.floor(Math.random()*answers.length)]
+        synth.speak(utterThis) 
+        recognition.abort() 
+
+    },
+    
+    "hora": function() {
+        utterThis.text = "Mira alguna de las esquinas de tu pantalla"
+        synth.speak(utterThis)
+        recognition.abort()
+
+    },
+
+    "ejhj": function() {
+        
+    },
+
 }
