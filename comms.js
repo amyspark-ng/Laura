@@ -87,6 +87,7 @@ export let commands = {
         utterThis.text = "Abrire una nueva pestaña"
         setTimeout(() => {
             let query = ogPhrase.replace('busca', '')
+            query = query.replace('Busca', '')
             let url = `https://www.google.com/search?q=${query}`
             window.open(url, '_blank');
         }, 3000);
