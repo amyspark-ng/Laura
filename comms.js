@@ -1,4 +1,4 @@
-import { synth, utterThis, recognition } from "./script.js"
+import { synth, utterThis, recognition, ogPhrase } from "./script.js"
 
 export let management = {
     joking: false
@@ -77,9 +77,39 @@ export let commands = {
         recognition.abort()
     },
 
-    "clima": function() {
+    "busca": function() {
+        management.joking = false
+        utterThis.text = "Abrire una nueva pestaña"
+        setTimeout(() => {
+            let query = ogPhrase.replace('busca', '')
+            let url = `https://www.google.com/search?q=${query}`
+            window.open(url, '_blank');
+        }, 3000);
+
+        synth.speak(utterThis) 
+        recognition.abort()
+    },
+
+    "numero": function() {
         management.joking = false
 
-        console.log("Hay buen clima") 
+        let numeritos = ogPhrase.split(' ')
+        numeritos = numeritos.filter(a => /\d/.test(a))
+
+        for(let i = 0; i < numeritos.length; i++) {
+            numeritos[i] = parseInt(numeritos[i], 10)
+        }
+
+        let greatNumber = Math.max(...numeritos)
+        let smallNumber = Math.min(...numeritos)
+        let randomNumber = Math.floor((Math.random() * greatNumber) + smallNumber);
+        
+        let finalPhrase = `Un numero aleatorio entre ${smallNumber} y ${greatNumber}, ${randomNumber}`
+
+        console.log(finalPhrase)
+
+        utterThis.text = finalPhrase
+        synth.speak(utterThis)
+        recognition.abort()
     },
 }

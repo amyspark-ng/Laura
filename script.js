@@ -6,7 +6,7 @@ const btnStopRecord = document.querySelector("#btnStopRecord")
 const textarea = document.querySelector("#text")
 let badumtss = new Audio("badumtss.mp3")
 
-let ogPhrase;
+export let ogPhrase = '';
 
 // setting stuff up
 export let recognition = new webkitSpeechRecognition();
@@ -19,7 +19,8 @@ export let utterThis = new SpeechSynthesisUtterance();
 
 synth.lang = 'es-ES';
 
-// test("amor")
+// export let ogPhrase = "Un numero aleatorio entre 75 y 18"
+// test(ogPhrase)
 
 btnStartRecord.addEventListener('click', () => {
 	recognition.start()
@@ -103,4 +104,9 @@ function test(phrase) {
 			}
 		}
 	}
+}
+
+function di(phrase) {
+	utterThis.text = phrase
+	synth.speak(utterThis)			
 }
