@@ -8,7 +8,7 @@ export let commands = {
     "hola": function() {
         management.joking = false
 
-        utterThis.text = "Hola, en que puedo ayudarte?"
+        utterThis.text = "Hola, soy Laura en que puedo ayudarte?"
         synth.speak(utterThis) 
         recognition.abort()
     },
@@ -95,7 +95,7 @@ export let commands = {
         recognition.abort()
     },
 
-    "numero": function() {
+    "aleatorio": function() {
         management.joking = false
 
         let numeritos = ogPhrase.split(' ')
@@ -118,7 +118,7 @@ export let commands = {
         recognition.abort()
     },
     
-    "cancion": function() {
+    "canción": function() {
   management.joking = false      
 
     let answers = [
