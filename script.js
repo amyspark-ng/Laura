@@ -35,6 +35,7 @@ recognition.onresult = (event) => {
 	let results = event.results;
 	ogPhrase = results[results.length - 1][0].transcript;
 	textarea.value = ogPhrase
+	ogPhrase = ogPhrase.toLowerCase()
 
 	const deleteThese = /[!"#$%&'()*+,-./:;<=>¿?@[\]^_`{|}~\u0300-\u036f]/g;
 	
